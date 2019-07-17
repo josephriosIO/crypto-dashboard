@@ -1,5 +1,6 @@
 import React from "react";
 import ConfirmButton from "./ConfirmButton";
+import CoinGrid from "./CoinGrid";
 import { AppContext } from "../../AppProvider";
 import Page from "../Shared/Page";
 
@@ -15,6 +16,7 @@ export default function() {
       </AppContext.Consumer>
 
       <ConfirmButton />
+      <CoinGrid />
     </Page>
   );
 }
