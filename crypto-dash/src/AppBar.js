@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { AppContext } from "./AppProvider";
 
 const Bar = styled.div`
   display: grid;
@@ -25,7 +26,15 @@ function lowerCase(name) {
 }
 
 function ControlButton({ name, active }) {
-  return <ControlBtnElem active={active}>{lowerCase(name)}</ControlBtnElem>;
+  return (
+    <AppContext.Consumer>
+      {({ page, setPage }) => (
+        <ControlBtnElem active={page === name} onClick={() => setPage(name)}>
+          {lowerCase(name)}
+        </ControlBtnElem>
+      )}
+    </AppContext.Consumer>
+  );
 }
 
 export default function() {
@@ -33,8 +42,8 @@ export default function() {
     <Bar>
       <Logo>Crypto Look</Logo>
       <div />
-      <ControlButton active name="Dashboard" />
-      <ControlButton name="Settings" />
+      <ControlButton active name="dashboard" />
+      <ControlButton name="settings" />
     </Bar>
   );
 }
