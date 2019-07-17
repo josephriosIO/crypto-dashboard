@@ -3,6 +3,7 @@ import AppLayout from "./AppLayout";
 import AppBar from "./AppBar";
 import { AppProvider } from "./AppProvider";
 import Settings from "./components/Settings/Settings";
+import Content from "./components/Shared/Content";
 import "./App.css";
 
 function App() {
@@ -10,7 +11,9 @@ function App() {
     <AppLayout className="App">
       <AppProvider>
         <AppBar />
-        <Settings />
+        <Content>
+          <Settings />
+        </Content>
       </AppProvider>
     </AppLayout>
   );
