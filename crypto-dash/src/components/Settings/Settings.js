@@ -14,7 +14,7 @@ export default function() {
           ) : null
         }
       </AppContext.Consumer>
-
+      <CoinGrid topSection />
       <ConfirmButton />
       <CoinGrid />
     </Page>
