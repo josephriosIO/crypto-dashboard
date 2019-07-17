@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import _ from "lodash";
 const cc = require("cryptocompare");
+cc.setApiKey(
+  "31dc85e63c45fa987be19cd71e860b22d0e98be59c15328e8e7c478296cfa392"
+);
 
 export const AppContext = React.createContext();
 
