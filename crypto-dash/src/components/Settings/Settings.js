@@ -1,10 +1,11 @@
 import React from "react";
 import ConfirmButton from "./ConfirmButton";
 import { AppContext } from "../../AppProvider";
+import Page from "../Shared/Page";
 
 export default function() {
   return (
-    <div>
+    <Page name="settings">
       <AppContext.Consumer>
         {({ firstVisit }) =>
           firstVisit ? (
@@ -14,6 +15,6 @@ export default function() {
       </AppContext.Consumer>
 
       <ConfirmButton />
-    </div>
+    </Page>
   );
 }
