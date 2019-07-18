@@ -90,7 +90,7 @@ function PriceTileCompact({ sym, data, currentFavorite, setCurrentFavorite }) {
 export default function({ price, index }) {
   let sym = Object.keys(price)[0];
   let data = price[sym]["USD"];
-  let TileClass = index < 5 ? PriceTile : PriceTileCompact;
+  let TileClass = index < 6 ? PriceTile : PriceTileCompact;
   return (
     <AppContext.Consumer>
       {({ currentFavorite, setCurrentFavorite }) => (
