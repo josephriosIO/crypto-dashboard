@@ -21,6 +21,7 @@ export class AppProvider extends Component {
       removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
       setFilteredCoins: this.setFilteredCoins,
+      setCurrentFavorite: this.setCurrentFavorite,
       confirmFavs: this.confirmFavs
     };
   }
@@ -53,15 +54,6 @@ export class AppProvider extends Component {
 
   setFilteredCoins = filteredCoins => this.setState({ filteredCoins });
 
-  saveSettings = () => {
-    let cryptoData = JSON.parse(localStorage.getItem("cryptoLook"));
-    if (!cryptoData) {
-      return { page: "setting", firstVisit: true };
-    }
-    let { favorites } = cryptoData;
-    return { favorites };
-  };
-
   fetchPrices = async () => {
     let prices = await this.prices();
     // We must filter the empty price objects (not in the lecture)
@@ -84,10 +76,12 @@ export class AppProvider extends Component {
   };
 
   confirmFavs = () => {
+    let currentFavorite = this.state.favorites[0];
     this.setState(
       {
         firstVisit: false,
-        page: "dashboard"
+        page: "dashboard",
+        currentFavorite
       },
       () => {
         this.fetchPrices();
@@ -96,9 +90,33 @@ export class AppProvider extends Component {
     localStorage.setItem(
       "cryptoLook",
       JSON.stringify({
-        favorites: this.state.favorites
+        favorites: this.state.favorites,
+        currentFavorite
       })
     );
+  };
+
+  setCurrentFavorite = sym => {
+    this.setState({
+      currentFavorite: sym
+    });
+
+    localStorage.setItem(
+      "cryptoLook",
+      JSON.stringify({
+        ...JSON.parse(localStorage.getItem("cryptoLook")),
+        currentFavorite: sym
+      })
+    );
+  };
+
+  saveSettings = () => {
+    let cryptoData = JSON.parse(localStorage.getItem("cryptoLook"));
+    if (!cryptoData) {
+      return { page: "setting", firstVisit: true };
+    }
+    let { favorites, currentFavorite } = cryptoData;
+    return { favorites, currentFavorite };
   };
 
   setPage = page => this.setState({ page });
