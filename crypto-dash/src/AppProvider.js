@@ -21,7 +21,6 @@ export class AppProvider extends Component {
       removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
       setFilteredCoins: this.setFilteredCoins,
-      fetchPrices: this.fetchPrices,
       confirmFavs: this.confirmFavs
     };
   }
@@ -64,7 +63,6 @@ export class AppProvider extends Component {
   };
 
   fetchPrices = async () => {
-    if (this.state.firstVisit) return;
     let prices = await this.prices();
     // We must filter the empty price objects (not in the lecture)
     prices = prices.filter(price => Object.keys(price).length);
@@ -73,7 +71,7 @@ export class AppProvider extends Component {
 
   prices = async () => {
     let returnData = [];
-    for (let i = 0; i < this.state.favorites; i++) {
+    for (let i = 0; i < this.state.favorites.length; i++) {
       try {
         let priceData = await cc.priceFull(this.state.favorites[i], "USD");
         returnData.push(priceData);
