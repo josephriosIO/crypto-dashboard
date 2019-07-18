@@ -21,12 +21,14 @@ export class AppProvider extends Component {
       removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
       setFilteredCoins: this.setFilteredCoins,
+      fetchPrices: this.fetchPrices,
       confirmFavs: this.confirmFavs
     };
   }
 
   componentDidMount() {
     this.fetchCoins();
+    this.fetchPrices();
   }
 
   fetchCoins = async () => {
@@ -61,11 +63,38 @@ export class AppProvider extends Component {
     return { favorites };
   };
 
+  fetchPrices = async () => {
+    if (this.state.firstVisit) return;
+    let prices = await this.prices();
+    // We must filter the empty price objects (not in the lecture)
+    prices = prices.filter(price => Object.keys(price).length);
+    this.setState({ prices });
+  };
+
+  prices = async () => {
+    let returnData = [];
+    for (let i = 0; i < this.state.favorites; i++) {
+      try {
+        let priceData = await cc.priceFull(this.state.favorites[i], "USD");
+        returnData.push(priceData);
+      } catch (err) {
+        console.warn("fetch price error", err);
+      }
+    }
+
+    return returnData;
+  };
+
   confirmFavs = () => {
-    this.setState({
-      firstVisit: false,
-      page: "dashboard"
-    });
+    this.setState(
+      {
+        firstVisit: false,
+        page: "dashboard"
+      },
+      () => {
+        this.fetchPrices();
+      }
+    );
     localStorage.setItem(
       "cryptoLook",
       JSON.stringify({

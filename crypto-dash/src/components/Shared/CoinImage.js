@@ -5,7 +5,7 @@ export default function({ coin, style }) {
     <img
       alt={coin.CoinSymbol}
       style={style || { height: "50px" }}
-      src={`http://cryptocompare.com/${coin.ImageUrl}`}
+      src={`https://cryptocompare.com/${coin.ImageUrl}`}
     />
   );
 }
